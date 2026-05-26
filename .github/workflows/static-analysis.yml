@@ -44,7 +44,7 @@ jobs:
             --xml \
             --xml-version=2 \
             --suppress=missingIncludeSystem \
-            src include 2> reports/cppcheck-report.xml
+            src 2> reports/cppcheck-report.xml
 
       ##########################################################
       # MISRA CHECKS
@@ -59,7 +59,7 @@ jobs:
             --xml \
             --xml-version=2 \
             --suppress=missingIncludeSystem \
-            src include 2> reports/misra-report.xml
+            src 2> reports/misra-report.xml
 
       ##########################################################
       # GENERATE HTML SUMMARY
