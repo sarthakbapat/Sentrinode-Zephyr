@@ -15,14 +15,31 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install dependencies
+      - name: Install cppcheck latest
         run: |
           sudo apt-get update
 
           sudo apt-get install -y \
-            cppcheck \
+            git \
+            cmake \
+            python3 \
             python3-pip \
-            python3-jinja2
+            build-essential
+
+          git clone https://github.com/danmar/cppcheck.git
+
+          cd cppcheck
+
+          mkdir build
+          cd build
+
+          cmake ..
+
+          make -j$(nproc)
+
+          sudo make install
+
+          cppcheck --version
 
       - name: Create reports directory
         run: |
@@ -66,76 +83,6 @@ jobs:
             --addon=cppcheck_repo/addons/misra.py \
             --suppress=missingIncludeSystem \
             src include 2> reports/misra-report.xml
-
-      ##########################################################
-      # GENERATE HTML SUMMARY
-      ##########################################################
-
-      - name: Generate HTML report
-        run: |
-          cat << 'EOF' > reports/report.html
-          <!DOCTYPE html>
-          <html>
-          <head>
-              <title>Static Analysis Report</title>
-              <style>
-                  body {
-                      font-family: Arial, sans-serif;
-                      margin: 40px;
-                      background-color: #f4f4f4;
-                  }
-
-                  h1 {
-                      color: #333;
-                  }
-
-                  .section {
-                      background: white;
-                      padding: 20px;
-                      margin-bottom: 20px;
-                      border-radius: 8px;
-                      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-                  }
-
-                  pre {
-                      background: #272822;
-                      color: #f8f8f2;
-                      padding: 15px;
-                      overflow-x: auto;
-                      border-radius: 5px;
-                  }
-              </style>
-          </head>
-
-          <body>
-
-              <h1>Sentrinode Zephyr Static Analysis Report</h1>
-
-              <div class="section">
-                  <h2>Cppcheck Report</h2>
-                  <pre>
-          EOF
-
-          cat reports/cppcheck-report.xml >> reports/report.html
-
-          cat << 'EOF' >> reports/report.html
-                  </pre>
-              </div>
-
-              <div class="section">
-                  <h2>MISRA Report</h2>
-                  <pre>
-          EOF
-
-          cat reports/misra-report.xml >> reports/report.html
-
-          cat << 'EOF' >> reports/report.html
-                  </pre>
-              </div>
-
-          </body>
-          </html>
-          EOF
 
       ##########################################################
       # UPLOAD ARTIFACTS
