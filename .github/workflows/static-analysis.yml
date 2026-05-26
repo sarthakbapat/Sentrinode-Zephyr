@@ -53,6 +53,7 @@ jobs:
         uses: zephyrproject-rtos/action-zephyr-setup@v1
         with:
           toolchains: arm-zephyr-eabi
+          use-local-manifest: false
 
       ##########################################################
       # COPY APP INTO WORKSPACE
