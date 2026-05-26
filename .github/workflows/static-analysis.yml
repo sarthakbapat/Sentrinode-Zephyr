@@ -52,8 +52,8 @@ jobs:
       - name: Setup Zephyr environment
         uses: zephyrproject-rtos/action-zephyr-setup@v1
         with:
+          app-path: example-application
           toolchains: arm-zephyr-eabi
-          use-local-manifest: false
 
       ##########################################################
       # COPY APP INTO WORKSPACE
