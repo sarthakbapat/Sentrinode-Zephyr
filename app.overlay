@@ -1,0 +1,10 @@
+&i2c2 {
+    status="okay";
+    lsm6dsl: lsm6dsl@6a {
+		irq-gpios = <&gpiod 11 GPIO_ACTIVE_HIGH>;
+	};
+};
+
+&flash0 {
+    status="okay";
+};

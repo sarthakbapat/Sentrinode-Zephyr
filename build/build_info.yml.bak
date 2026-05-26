@@ -1,0 +1,5 @@
+west:
+  command: /Users/sarthak123/zephyr_env_new/bin/west build -p always -b disco_l475_iot1
+    --no-sysbuild -s /Users/sarthak123/zephyr_workspace/sentrinode -d /Users/sarthak123/zephyr_workspace/sentrinode/build
+  topdir: /Users/sarthak123/zephyrproject
+  version: 1.5.0

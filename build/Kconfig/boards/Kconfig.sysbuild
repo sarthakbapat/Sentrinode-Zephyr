@@ -1,0 +1,2 @@
+# Load Sysbuild board Kconfig descriptions.
+osource "/Users/sarthak123/zephyrproject/zephyr/boards/st/disco_l475_iot1/Kconfig.sysbuild"

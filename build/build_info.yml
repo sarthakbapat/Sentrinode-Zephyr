@@ -1,0 +1,61 @@
+cmake:
+  application:
+    configuration-dir: '/Users/sarthak123/zephyr_workspace/sentrinode'
+    source-dir: '/Users/sarthak123/zephyr_workspace/sentrinode'
+  board:
+    name: 'disco_l475_iot1'
+    path:
+     - '/Users/sarthak123/zephyrproject/zephyr/boards/st/disco_l475_iot1'
+    qualifiers: 'stm32l475xx'
+    revision: ''
+  devicetree:
+    bindings-dirs:
+     - '/Users/sarthak123/zephyrproject/zephyr/dts/bindings'
+    files:
+     - '/Users/sarthak123/zephyrproject/zephyr/boards/st/disco_l475_iot1/disco_l475_iot1.dts'
+     - '/Users/sarthak123/zephyr_workspace/sentrinode/app.overlay'
+    include-dirs:
+     - '/Users/sarthak123/zephyrproject/modules/hal/ambiq/dts'
+     - '/Users/sarthak123/zephyrproject/modules/hal/atmel/include'
+     - '/Users/sarthak123/zephyrproject/modules/hal/bouffalolab/include'
+     - '/Users/sarthak123/zephyrproject/modules/hal/bouffalolab/include/zephyr'
+     - '/Users/sarthak123/zephyrproject/modules/hal/gigadevice/include'
+     - '/Users/sarthak123/zephyrproject/modules/hal/microchip/include'
+     - '/Users/sarthak123/zephyrproject/modules/hal/microchip/dts'
+     - '/Users/sarthak123/zephyrproject/modules/hal/nuvoton/dts'
+     - '/Users/sarthak123/zephyrproject/modules/hal/nxp/dts'
+     - '/Users/sarthak123/zephyrproject/modules/hal/stm32/dts'
+     - '/Users/sarthak123/zephyrproject/modules/hal/ti/dts'
+     - '/Users/sarthak123/zephyrproject/zephyr/include'
+     - '/Users/sarthak123/zephyrproject/zephyr/include/zephyr'
+     - '/Users/sarthak123/zephyrproject/zephyr/dts/common'
+     - '/Users/sarthak123/zephyrproject/zephyr/dts/vendor'
+     - '/Users/sarthak123/zephyrproject/zephyr/dts/rx'
+     - '/Users/sarthak123/zephyrproject/zephyr/dts/x86'
+     - '/Users/sarthak123/zephyrproject/zephyr/dts/xtensa'
+     - '/Users/sarthak123/zephyrproject/zephyr/dts/sparc'
+     - '/Users/sarthak123/zephyrproject/zephyr/dts/riscv'
+     - '/Users/sarthak123/zephyrproject/zephyr/dts/posix'
+     - '/Users/sarthak123/zephyrproject/zephyr/dts/arm64'
+     - '/Users/sarthak123/zephyrproject/zephyr/dts/arm'
+     - '/Users/sarthak123/zephyrproject/zephyr/dts/arc'
+     - '/Users/sarthak123/zephyrproject/zephyr/dts'
+    user-files:
+     - '/Users/sarthak123/zephyr_workspace/sentrinode/app.overlay'
+  kconfig:
+    files:
+     - '/Users/sarthak123/zephyrproject/zephyr/boards/st/disco_l475_iot1/disco_l475_iot1_defconfig'
+     - '/Users/sarthak123/zephyr_workspace/sentrinode/prj.conf'
+    user-files:
+     - '/Users/sarthak123/zephyr_workspace/sentrinode/prj.conf'
+  toolchain:
+    name: 'zephyr'
+    path: '/Users/sarthak123/zephyr-sdk-0.17.4'
+  zephyr:
+    version: '4.3.99'
+    zephyr-base: '/Users/sarthak123/zephyrproject/zephyr'
+version: '0.1.0'
+west:
+  command: '/Users/sarthak123/zephyr_env_new/bin/west build -p always -b disco_l475_iot1 --no-sysbuild -s /Users/sarthak123/zephyr_workspace/sentrinode -d /Users/sarthak123/zephyr_workspace/sentrinode/build'
+  topdir: '/Users/sarthak123/zephyrproject'
+  version: '1.5.0'
