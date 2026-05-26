@@ -52,8 +52,16 @@ jobs:
       - name: Setup Zephyr environment
         uses: zephyrproject-rtos/action-zephyr-setup@v1
         with:
-          app-path: .
           toolchains: arm-zephyr-eabi
+
+      ##########################################################
+      # COPY APP INTO WORKSPACE
+      ##########################################################
+
+      - name: Copy app into workspace
+        run: |
+          mkdir -p zephyrproject/app
+          cp -r . zephyrproject/app/
 
       ##########################################################
       # BUILD FIRMWARE
