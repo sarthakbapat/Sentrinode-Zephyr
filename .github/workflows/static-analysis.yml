@@ -1,0 +1,150 @@
+name: Static Analysis and MISRA Checks
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - development
+
+jobs:
+  cppcheck:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+
+          sudo apt-get install -y \
+            cppcheck \
+            python3-pip \
+            python3-jinja2
+
+      - name: Create reports directory
+        run: |
+          mkdir -p reports
+
+      ##########################################################
+      # STATIC ANALYSIS
+      ##########################################################
+
+      - name: Run Cppcheck static analysis
+        run: |
+          cppcheck \
+            --enable=all \
+            --inconclusive \
+            --std=c11 \
+            --language=c \
+            --force \
+            --inline-suppr \
+            --xml \
+            --xml-version=2 \
+            --suppress=missingIncludeSystem \
+            src include 2> reports/cppcheck-report.xml
+
+      ##########################################################
+      # MISRA CHECKS
+      ##########################################################
+
+      - name: Run MISRA checks
+        run: |
+          cppcheck \
+            --addon=misra.json \
+            --std=c11 \
+            --language=c \
+            --xml \
+            --xml-version=2 \
+            --suppress=missingIncludeSystem \
+            src include 2> reports/misra-report.xml
+
+      ##########################################################
+      # GENERATE HTML SUMMARY
+      ##########################################################
+
+      - name: Generate HTML report
+        run: |
+          cat << 'EOF' > reports/report.html
+          <!DOCTYPE html>
+          <html>
+          <head>
+              <title>Static Analysis Report</title>
+              <style>
+                  body {
+                      font-family: Arial, sans-serif;
+                      margin: 40px;
+                      background-color: #f4f4f4;
+                  }
+
+                  h1 {
+                      color: #333;
+                  }
+
+                  .section {
+                      background: white;
+                      padding: 20px;
+                      margin-bottom: 20px;
+                      border-radius: 8px;
+                      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                  }
+
+                  pre {
+                      background: #272822;
+                      color: #f8f8f2;
+                      padding: 15px;
+                      overflow-x: auto;
+                      border-radius: 5px;
+                  }
+              </style>
+          </head>
+
+          <body>
+
+              <h1>Sentrinode Zephyr Static Analysis Report</h1>
+
+              <div class="section">
+                  <h2>Cppcheck Report</h2>
+                  <pre>
+          EOF
+
+          cat reports/cppcheck-report.xml >> reports/report.html
+
+          cat << 'EOF' >> reports/report.html
+                  </pre>
+              </div>
+
+              <div class="section">
+                  <h2>MISRA Report</h2>
+                  <pre>
+          EOF
+
+          cat reports/misra-report.xml >> reports/report.html
+
+          cat << 'EOF' >> reports/report.html
+                  </pre>
+              </div>
+
+          </body>
+          </html>
+          EOF
+
+      ##########################################################
+      # UPLOAD ARTIFACTS
+      ##########################################################
+
+      - name: Upload XML Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: static-analysis-xml-reports
+          path: |
+            reports/cppcheck-report.xml
+            reports/misra-report.xml
+
+      - name: Upload HTML Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: static-analysis-html-report
+          path: reports/report.html
