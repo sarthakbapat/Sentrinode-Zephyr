@@ -50,16 +50,22 @@ jobs:
       # MISRA CHECKS
       ##########################################################
 
+      - name: Clone cppcheck addons
+        run: |
+          git clone https://github.com/danmar/cppcheck.git cppcheck_repo
+
       - name: Run MISRA checks
         run: |
           cppcheck \
-            --addon=misra.json \
+            --enable=all \
+            --inconclusive \
             --std=c11 \
             --language=c \
             --xml \
             --xml-version=2 \
+            --addon=cppcheck_repo/addons/misra.py \
             --suppress=missingIncludeSystem \
-            src 2> reports/misra-report.xml
+            src include 2> reports/misra-report.xml
 
       ##########################################################
       # GENERATE HTML SUMMARY
