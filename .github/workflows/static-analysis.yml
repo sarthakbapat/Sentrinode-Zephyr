@@ -46,6 +46,32 @@ jobs:
           mkdir -p reports
 
       ##########################################################
+      # SETUP ZEPHYR ENVIRONMENT
+      ##########################################################
+
+      - name: Setup Zephyr environment
+        uses: zephyrproject-rtos/action-zephyr-setup@v1
+        with:
+          app-path: .
+          toolchains: arm-zephyr-eabi
+
+      ##########################################################
+      # BUILD FIRMWARE
+      ##########################################################
+
+      - name: Build firmware
+        run: |
+          west build -p always -b disco_l475_iot1 --no-sysbuild .
+
+      ##########################################################
+      # GENERATE COMPILE DATABASE
+      ##########################################################
+
+      - name: Generate compile database
+        run: |
+          west build -t compiledb
+
+      ##########################################################
       # STATIC ANALYSIS
       ##########################################################
 
