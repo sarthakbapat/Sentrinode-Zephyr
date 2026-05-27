@@ -95,15 +95,7 @@ jobs:
 
       - name: Build firmware
         run: |
-          west build -p always -b disco_l475_iot1 --no-sysbuild .
-
-      ##########################################################
-      # GENERATE COMPILE DATABASE
-      ##########################################################
-
-      - name: Generate compile database
-        run: |
-          west build -t compiledb
+          west build -p always -b disco_l475_iot1 --no-sysbuild -- -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .
 
       ##########################################################
       # STATIC ANALYSIS
@@ -112,6 +104,7 @@ jobs:
       - name: Run Cppcheck static analysis
         run: |
           cppcheck \
+            --project=build/compile_commands.json \
             --enable=all \
             --inconclusive \
             --std=c11 \
