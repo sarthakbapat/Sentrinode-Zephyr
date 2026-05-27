@@ -61,6 +61,8 @@ jobs:
       - name: Export Zephyr environment
         run: |
           west zephyr-export
+          echo "ZEPHYR_BASE=$(west topdir)/zephyr" >> $GITHUB_ENV
+          echo "WORKSPACE_DIR=$(west topdir)" >> $GITHUB_ENV
 
       - name: Install Python dependencies
         run: |
