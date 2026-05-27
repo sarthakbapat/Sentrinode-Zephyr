@@ -114,7 +114,7 @@ jobs:
             --xml \
             --xml-version=2 \
             --suppress=missingIncludeSystem \
-            src 2> reports/cppcheck-report.xml
+           2> reports/cppcheck-report.xml
 
       ##########################################################
       # MISRA CHECKS
