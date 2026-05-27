@@ -52,7 +52,7 @@ jobs:
       - name: Setup Zephyr environment
         uses: zephyrproject-rtos/action-zephyr-setup@v1
         with:
-          app-path: example-application
+          app-path: .
           toolchains: arm-zephyr-eabi
 
       ##########################################################
