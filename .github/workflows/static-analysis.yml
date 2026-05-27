@@ -49,20 +49,25 @@ jobs:
       # SETUP ZEPHYR ENVIRONMENT
       ##########################################################
 
-      - name: Setup Zephyr environment
-        uses: zephyrproject-rtos/action-zephyr-setup@v1
-        with:
-          app-path: .
-          toolchains: arm-zephyr-eabi
-
-      ##########################################################
-      # COPY APP INTO WORKSPACE
-      ##########################################################
-
-      - name: Copy app into workspace
+      - name: Install west
         run: |
-          mkdir -p zephyrproject/app
-          cp -r . zephyrproject/app/
+          pip3 install west
+
+      - name: Initialize west workspace
+        run: |
+          west init -l .
+          west update
+
+      - name: Export Zephyr environment
+        run: |
+          west zephyr-export
+
+      - name: Install Python dependencies
+        run: |
+          pip3 install -r zephyr/scripts/requirements.txt
+
+      - name: Install Zephyr SDK
+        uses: zephyrproject-rtos/action-zephyr-sdk@v1
 
       ##########################################################
       # BUILD FIRMWARE
