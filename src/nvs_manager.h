@@ -8,7 +8,7 @@
 #include <zephyr/sys/util.h>
 #include <zephyr/drivers/flash.h>
 #include <zephyr/storage/flash_map.h>
-#include <zephyr/kvss/nvs.h>
+#include <zephyr/fs/nvs.h>
 #include <zephyr/types.h>
 
 #define NVS_TAMPER_COUNT_ID 1
